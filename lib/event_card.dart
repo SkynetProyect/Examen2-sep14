@@ -30,7 +30,32 @@ Widget build(BuildContext context){
               height: 72,
               fit: BoxFit.cover,
               )
-           )
+           ),
+           Column(
+              children: [
+              Text(
+              event.name,
+              style: const TextStyle(
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+              ),
+              ),
+              const SizedBox(height: 4),
+              Text(event.category),
+              const SizedBox(height: 6),
+              Text(event.price.toString()),
+                  ],
+                ),
+
+            Column(
+              children: [
+              Text(event.price.toString()),
+              const SizedBox(height: 4),
+              Text(event.maxTickets.toString()),
+              const SizedBox(height: 6),
+              Text(event.description),
+                  ],
+                ),
           ],
         )
 
