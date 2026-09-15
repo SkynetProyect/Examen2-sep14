@@ -16,8 +16,86 @@ class _EventScreenState extends State<EventScreen> {
   bool cargando = false;
   bool errorCarga = false;
   String errorMessage = "";
-
   Future<String> loadMessage() async {
+  Map<int, int> cantidadEventos = {};
+  double costoTotal= 0.0;
+
+
+void incrementarCantidad(Event event) {
+  int cantidad_evento = 0;
+  
+  if (cantidadEventos.containsKey(event.id)) {
+    cantidad_evento = cantidadEventos[event.id]!;
+  }
+  if (!event.available) return; 
+
+  setState(() {
+    cantidadEventos[event.id] = cantidad_evento + 1;
+  });
+}
+
+void decrementarCantidad(Event event) {
+  int cantidad_evento = 0;
+  
+  if (cantidadEventos[event.id] != null) {
+    cantidad_evento = cantidadEventos[event.id]!;
+  }
+
+  if (cantidad_evento <= 0) return;
+
+  setState(() {
+    if (cantidad_evento == 1) {
+      cantidadEventos.remove(event.id);
+    } else {
+      cantidadEventos[event.id] = cantidad_evento - 1;
+    }
+  });
+}
+    
+double calcularCostoTotal(List eventos) {
+  double costoTotal = 0;
+  for (var evento in eventos) {
+     if (cantidadEventos[evento.id] != null) {
+      int cantidad = cantidadEventos[evento.id]!;
+      costoTotal += cantidad * evento.price;
+
+    }
+  }
+  return costoTotal;
+}
+
+int calcularTotalReservas(List eventos) {
+  int totalReservas = 0;
+
+  for (var evento in eventos) {
+    if (cantidadEventos[evento.id] != null){
+      int cantidad = cantidadEventos[evento.id]!;
+      totalReservas += cantidad;
+
+    }
+  }
+  return totalReservas;
+}
+
+bool validarReservas(){
+  bool masDeTres = calcularTotalReservas(eventos) >= 3 ? true : false;
+  
+  bool categoriaCultural= false;
+
+  for(var evento in eventos){
+    if (cantidadEventos.containsKey(evento.id)){
+      if(evento.category == "Cultural"){
+        categoriaCultural = true;
+        if(categoriaCultural && masDeTres){
+          return true;
+        }
+      }
+  }
+  return false;
+
+}
+
+
 
    try {
       var resultado = await loadEvents(simulateError: false, simulateEmpty: false);
