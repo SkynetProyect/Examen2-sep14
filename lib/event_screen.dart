@@ -1,4 +1,3 @@
-import 'dart:nativewrappers/_internal/vm/lib/ffi_native_type_patch.dart';
 import 'package:examen_practico_g61_starter/event_card.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:examen_practico_g61_starter/event.dart';
@@ -19,9 +18,6 @@ class _EventScreenState extends State<EventScreen> {
   String errorMessage = "";
 
   Future<String> loadMessage() async {
-    setState(() {
-      cargando = true;
-    });
 
    try {
       var resultado = await loadEvents(simulateError: false, simulateEmpty: false);
@@ -42,8 +38,6 @@ class _EventScreenState extends State<EventScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    loadMessage();
     
     if(cargando){
       return Scaffold(
@@ -67,18 +61,21 @@ class _EventScreenState extends State<EventScreen> {
       appBar: AppBar(
         title: const Text('Reserva de entradas'),
       ),
-      body: const Center(
+      body: Center(
         child: Padding(
           padding: EdgeInsets.all(24),
-          child: Column(
-            children: [
-            
-            Text(
-              'Se ha producido un error durante la carga de datos',
+          child: InkWell(
+              onTap: (){
+                loadMessage();
+                setState(() {
+                  cargando = true;
+                });
+              },
+              child: Text(
+              'Se ha producido un Error durante la carga, de click aqui para recargar',
               textAlign: TextAlign.center,
+              ),
             )
-            ],
-          ),
         ),
       ),
     );
@@ -90,15 +87,22 @@ class _EventScreenState extends State<EventScreen> {
       appBar: AppBar(
         title: const Text('Reserva de entradas'),
       ),
-      body: const Center(
+      body: Center(
         child: Padding(
           padding: EdgeInsets.all(24),
           child: Column(
             children: [
-            
-            Text(
-              'No hay eventos disponibles',
+            InkWell(
+              onTap: (){
+                loadMessage();
+                setState(() {
+                  cargando = true;
+                });
+              },
+              child: Text(
+              'No hay eventos disponibles, de click aqui para recargar',
               textAlign: TextAlign.center,
+              ),
             )
             ],
           ),
@@ -116,7 +120,8 @@ class _EventScreenState extends State<EventScreen> {
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(24),
-          child: ListView(
+          child: 
+          ListView(
             children: eventos.map( (evento){
               return EventCard(event: evento, onTap: (){});
             }).toList(),
