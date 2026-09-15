@@ -199,28 +199,20 @@ bool validarReservas(){
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(24),
-          child: Column(
-            children: [
-          Column(
-            children: [
-              Text("Total reservadas: "+ calcularTotalReservas(eventos).toString()), 
-              Text("Total costo: "+calcularCostoTotal(eventos).toString()),
-              Text("Total eventos: "),
-            ]
-          ),
+          child: 
           ListView(
-            children: eventos.map( (evento){
+            children: 
+            eventos.map( (evento){
               return EventCard(event: evento, 
               onTap: (){EventDetailCard(event: evento, reservados: cantidadEventos.containsKey(evento.id) ?  cantidadEventos[evento.id]! : 0,);}, 
-              sumar: () {},
-              restar: () {},
+              sumar: () {incrementarCantidad(evento);},
+              restar: () {decrementarCantidad(evento);},
               );
             }).toList(),
-          )
-          ]
           )
         ),
       ),
     );
   }
 }
+
