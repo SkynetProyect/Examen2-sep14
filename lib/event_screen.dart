@@ -1,4 +1,5 @@
 import 'package:examen_practico_g61_starter/event_card.dart';
+import 'package:examen_practico_g61_starter/event_detail_card.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:examen_practico_g61_starter/event.dart';
 import 'package:examen_practico_g61_starter/event_repository.dart';
@@ -111,8 +112,6 @@ class _EventScreenState extends State<EventScreen> {
     );
     }
 
-
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Reserva de entradas'),
@@ -120,11 +119,25 @@ class _EventScreenState extends State<EventScreen> {
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(24),
-          child: 
+          child: Column(
+            children: [
+          Column(
+            children: [
+              Text("Total reservadas: ", calcularTotalReservas().toString()), 
+              Text("Total costo: "+calcularCostoTotal().toString()),
+              Text("Total eventos: "),
+            ]
+          ),
           ListView(
             children: eventos.map( (evento){
-              return EventCard(event: evento, onTap: (){});
+              return EventCard(event: evento, 
+              onTap: (){EventDetailCard(event: evento, reservados: cantidadEventos.containsKey(evento.id) ?  cantidadEventos[evento.id] : 0,);}, 
+              sumar: () {},
+              restar: () {},
+              );
             }).toList(),
+          )
+          ]
           )
         ),
       ),
