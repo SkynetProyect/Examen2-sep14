@@ -118,14 +118,7 @@ class _EventScreenState extends State<EventScreen> {
           child: ListView(
             children: eventos.map( (evento){
               return EventCard(
-                id = evento.id,
-                name = evento.name,
-                category = evento.category,
-                price = evento.price,
-                maxTickets = evento.maxTickets,
-                description = evento.description,
-                imagePath = evento.imagePath,
-                available = evento.available
+                evento = evento,
               );
             }).toList(),
           )
