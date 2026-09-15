@@ -115,8 +115,19 @@ class _EventScreenState extends State<EventScreen> {
       body: const Center(
         child: Padding(
           padding: EdgeInsets.all(24),
-          child: Column(
-            children: eventos.map
+          child: ListView(
+            children: eventos.map( (evento){
+              return EventCard(
+                id = evento.id,
+                name = evento.name,
+                category = evento.category,
+                price = evento.price,
+                maxTickets = evento.maxTickets,
+                description = evento.description,
+                imagePath = evento.imagePath,
+                available = evento.available
+              );
+            }).toList(),
           )
         ),
       ),
