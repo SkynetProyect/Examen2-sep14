@@ -1,4 +1,5 @@
 import 'dart:nativewrappers/_internal/vm/lib/ffi_native_type_patch.dart';
+import 'package:examen_practico_g61_starter/event_card.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:examen_practico_g61_starter/event.dart';
 import 'package:examen_practico_g61_starter/event_repository.dart';
@@ -112,14 +113,12 @@ class _EventScreenState extends State<EventScreen> {
       appBar: AppBar(
         title: const Text('Reserva de entradas'),
       ),
-      body: const Center(
+      body: Center(
         child: Padding(
           padding: EdgeInsets.all(24),
           child: ListView(
             children: eventos.map( (evento){
-              return EventCard(
-                evento = evento,
-              );
+              return EventCard(event: evento, onTap: (){});
             }).toList(),
           )
         ),
