@@ -49,11 +49,11 @@ Widget build(BuildContext context){
 
             Column(
               children: [
-              Text(event.price.toString()),
-              const SizedBox(height: 4),
               Text(event.maxTickets.toString()),
+              const SizedBox(height: 4),
+               Text(event.description),
               const SizedBox(height: 6),
-              Text(event.description),
+              Text(event.available.toString()),
                   ],
                 ),
           ],
